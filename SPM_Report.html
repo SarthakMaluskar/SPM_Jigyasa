@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Software Project Management - Jigyasa Report</title>
+<style>
+  body { font-family: "Times New Roman", Times, serif; margin: 40px 50px; color: #111; line-height: 1.5; font-size: 12pt; }
+  .header { text-align: center; margin-bottom: 30px; }
+  .subject { font-size: 20pt; font-weight: bold; margin-bottom: 18px; text-transform: uppercase; }
+  .project-title { font-size: 16pt; font-weight: bold; margin: 10px 0 18px; }
+  .team { margin: 0 auto; width: 80%; border-collapse: collapse; margin-bottom: 10px; }
+  .team th, .team td { border: 1px solid #444; padding: 8px 12px; text-align: left; }
+  .team th { background: #f2f2f2; }
+  h2 { font-size: 14pt; margin-top: 22px; margin-bottom: 8px; border-bottom: 1px solid #999; padding-bottom: 3px; }
+  p { margin: 8px 0; text-align: justify; }
+  ul { margin: 6px 0 10px 22px; }
+  li { margin: 4px 0; }
+  .footer-note { margin-top: 30px; font-size: 10pt; color: #444; }
+  @page { margin: 20mm; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="subject">Software Project Management</div>
+    <div class="project-title">Project Report: Jigyasa – Online Survey Management System</div>
+    <table class="team">
+      <tr><th>Team Member Name</th><th>Roll No.</th></tr>
+      <tr><td>Maluskar Sarthak Vilas</td><td>202351077</td></tr>
+      <tr><td>Lakshya Jangid</td><td>202351075</td></tr>
+      <tr><td>Manav Kumar</td><td>202351078</td></tr>
+    </table>
+  </div>
+
+  <h2>1. Main Objective of the Project and Real-World Problem It Solves</h2>
+  <p><strong>Objective:</strong> The main objective of <em>Jigyasa</em> is to provide a comprehensive, web-based platform for creating, distributing, managing, and analyzing online surveys. The system enables authenticated users to design customizable surveys, collect responses from target audiences, and perform data analysis with visualizations and exportable reports.</p>
+  <p><strong>Real-world problem addressed:</strong> Many organizations, institutions, and researchers still rely on fragmented tools (paper forms, spreadsheets, or separate services) to gather feedback and analyze results. This leads to inefficiencies, data inconsistency, limited access control, and time-consuming manual analysis. Jigyasa solves these problems by offering:</p>
+  <ul>
+    <li><strong>Centralized survey lifecycle management:</strong> Create, edit, activate/deactivate, and share surveys from a single dashboard.</li>
+    <li><strong>Controlled participation:</strong> Organization-linked users and surveys with optional organization-restricted access ensure responses come from the intended audience.</li>
+    <li><strong>Structured response collection:</strong> Support for text, single-choice, and multiple-choice questions with required-field validation improves data quality.</li>
+    <li><strong>Built-in analysis:</strong> CSV upload, interactive plotting (scatter, bar, line, pie, histogram, heatmap, box, area), grouping, saved analyses, and PDF export reduce the effort needed to derive insights.</li>
+    <li><strong>Accessibility and scalability:</strong> A web-based interface allows creators and respondents to access surveys from anywhere, streamlining feedback collection for academic, organizational, and research use cases.</li>
+  </ul>
+
+  <h2>2. Choice of Technology Stack and Methodology</h2>
+  <p>The project adopts a <strong>full-stack JavaScript (MERN-style) architecture</strong> with a modular, RESTful design. This stack was chosen for development efficiency, maintainability, and suitability for data-driven web applications.</p>
+  <p><strong>Frontend:</strong></p>
+  <ul>
+    <li><strong>React 18 + Vite:</strong> Component-based UI development, fast development server, and optimized production builds for a responsive single-page application.</li>
+    <li><strong>Tailwind CSS:</strong> Utility-first styling for rapid, consistent, and maintainable UI design.</li>
+    <li><strong>React Router:</strong> Client-side routing for dashboard, survey management, public response pages, and analysis views.</li>
+    <li><strong>Axios:</strong> Centralized HTTP client for API communication with configurable base URL and timeouts.</li>
+    <li><strong>Chart.js, React-Chartjs-2, Plotly.js, React-Plotly.js:</strong> Rich interactive data visualizations for survey and CSV analysis.</li>
+    <li><strong>React Toastify & Lucide/React Icons:</strong> User feedback notifications and consistent iconography.</li>
+  </ul>
+  <p><strong>Backend:</strong></p>
+  <ul>
+    <li><strong>Node.js + Express:</strong> Lightweight, non-blocking server ideal for REST APIs and I/O-bound operations (auth, CRUD, file uploads).</li>
+    <li><strong>MongoDB + Mongoose:</strong> Flexible document schema for evolving survey structures (dynamic questions, choices, answers) and easy modeling of relationships.</li>
+    <li><strong>JWT (jsonwebtoken) + bcryptjs:</strong> Stateless authentication and secure password hashing for user accounts.</li>
+    <li><strong>Multer, csv/csv-parse/csv-parser, json2csv:</strong> File upload handling and CSV parsing/export for the data analysis workflow.</li>
+    <li><strong>express-async-handler, CORS, dotenv:</strong> Clean async error handling, cross-origin access control for separate client/server deployment, and environment-based configuration.</li>
+  </ul>
+  <p><strong>Methodology:</strong> The system follows a <strong>client–server, layered/modular architecture</strong> (routes, controllers, models, middleware, utilities) and REST API conventions. This separation of concerns supports parallel frontend/backend development, easier testing, and incremental feature addition (e.g., survey management, responses, and analysis as distinct modules). Version control with Git and environment-driven configuration (development/production) support collaborative and deployable software project management practices.</p>
+
+  <h2>3. System Architecture and Data Flow</h2>
+  <p><strong>Architecture overview:</strong> Jigyasa is a three-tier web application:</p>
+  <ul>
+    <li><strong>Presentation tier (Client):</strong> React SPA (Vite) served to users; handles UI rendering, form validation, routing, and visualization.</li>
+    <li><strong>Application tier (Server):</strong> Express.js REST API exposing endpoints for authentication, organizations, surveys, survey responses, data analysis, and compatibility/public access routes. Middleware handles CORS, JSON parsing, request logging, no-cache headers for APIs, and centralized error handling.</li>
+    <li><strong>Data tier:</strong> MongoDB database accessed via Mongoose models for users/profiles, organizations, surveys, questions/choices, responses/answers, and analysis-related data.</li>
+  </ul>
+  <p><strong>Key modules and routes:</strong></p>
+  <ul>
+    <li><code>/api/auth/*</code> – registration, login, token/profile operations</li>
+    <li><code>/api/organizations/*</code> – organization listing and management</li>
+    <li><code>/api/surveys/*</code> – survey CRUD and listing</li>
+    <li><code>/api/survey-responses/*</code> – submission and retrieval of responses</li>
+    <li><code>/api/data-analysis/*</code> – CSV upload, plot/group operations, saving analyses</li>
+    <li><code>/api/api/*</code> – public/compatibility endpoints (e.g., public survey access)</li>
+    <li>Health check: <code>/api/health</code></li>
+  </ul>
+  <p><strong>Data flow (typical scenarios):</strong></p>
+  <ul>
+    <li><strong>Authentication:</strong> User submits credentials via the React login/register forms → Axios sends request to <code>/api/auth</code> → server validates, hashes/verifies passwords, issues JWT → client stores token (e.g., access token) and attaches it in <code>Authorization</code> headers for protected requests.</li>
+    <li><strong>Survey creation & management:</strong> Creator defines survey metadata and questions in the dashboard → client POST/PUTs to <code>/api/surveys</code> → controllers validate and persist survey/question/choice documents in MongoDB → updated data returned and rendered in survey list/detail/edit views.</li>
+    <li><strong>Survey response submission:</strong> Respondent opens a public/survey link (<code>/surveys/:creatorId/:surveyId</code>) → client fetches survey definition via public API → user fills answers → client submits to <code>/api/survey-responses</code> → server validates required fields and organization constraints, stores response/answers → confirmation/thank-you page shown.</li>
+    <li><strong>Data analysis:</strong> User uploads CSV in analyzer → Multer/server parses file and returns columns/metadata → user selects plot type and axes → client requests plot/group data from <code>/api/data-analysis</code> → server processes data and returns visualization-ready payload → Plotly/Chart.js renders charts; analyses can be saved and exported (e.g., PDF) for reporting.</li>
+  </ul>
+  <p>The server uses per-request database connection handling (suitable for serverless deployment like Vercel) and serves static assets/health endpoints alongside the API.</p>
+
+  <h2>4. Major Technical Challenges or Bugs Faced and How They Were Overcome</h2>
+  <p>During development and deployment of a full-stack survey and analytics platform, several practical challenges typically arise. The following key challenges and mitigations are reflected in the project’s design and configuration:</p>
+  <ul>
+    <li><strong>Cross-origin communication between client and server:</strong> With the React frontend and Express API hosted separately, browsers block requests due to CORS policies. <em>Resolution:</em> Configured CORS middleware with environment-driven allowed origins, credentials, and permitted methods/headers to securely enable client–server interaction in development and production.</li>
+    <li><strong>Secure authentication and session handling:</strong> Protecting user accounts and restricting access to survey management and responses required robust auth. <em>Resolution:</em> Implemented JWT-based stateless authentication with bcrypt password hashing, token configuration via environment variables, and protected API routes/middleware to ensure only authorized users access sensitive operations.</li>
+    <li><strong>Dynamic and nested survey data modeling:</strong> Surveys contain varying numbers/types of questions (text, single/multiple choice) and nested choices/answers, making schema design and validation complex. <em>Resolution:</em> Used MongoDB/Mongoose’s flexible document modeling to represent surveys, questions, choices, responses, and answers, with server-side validation for required fields and question-type constraints.</li>
+    <li><strong>CSV upload and data processing for analysis:</strong> Handling file uploads, parsing heterogeneous CSV data, and generating correct plot/group results can cause runtime and data-format issues. <em>Resolution:</em> Integrated Multer for uploads and CSV parsing libraries on the backend, with dedicated analysis endpoints to transform raw data into structured payloads consumable by Plotly/Chart.js on the frontend.</li>
+    <li><strong>Deployment and environment configuration issues:</strong> Differences between local and production (API base URLs, database URIs, caching behavior, serverless constraints) can break functionality. <em>Resolution:</em> Externalized configuration using <code>.env</code> variables (API URLs, JWT secrets, MongoDB URI, CORS origin, etc.), added a health-check endpoint, applied no-cache middleware for API responses to avoid stale data on platforms like Vercel, and implemented reusable DB connection logic. Documentation (README/DEPLOYMENT) guides consistent setup.</li>
+    <li><strong>API evolution/migration consistency:</strong> Project documentation indicates an earlier Django-based design reference and evolution to a Node/Express backend, which can introduce endpoint and data-contract mismatches. <em>Resolution:</em> Maintained modular routing (including compatibility routes) and a clear separation of concerns to align frontend expectations with backend APIs during iteration.</li>
+  </ul>
+
+  <h2>5. Key Limitations of the System and Future Scope</h2>
+  <p><strong>Key limitations:</strong></p>
+  <ul>
+    <li><strong>Scalability and performance at large scale:</strong> Advanced optimizations such as pagination for very large survey/response datasets, caching layers, and background job processing for heavy analytics/PDF generation may be limited in the current implementation.</li>
+    <li><strong>Limited question/logic complexity:</strong> The system supports core question types (text, single choice, multiple choice) but may lack advanced survey logic such as conditional branching/skip logic, question piping, and complex validation rules.</li>
+    <li><strong>Analytics and reporting depth:</strong> While CSV analysis and multiple chart types are supported, advanced statistical analysis, real-time dashboards, and automated insight generation are not fully developed.</li>
+    <li><strong>Security and compliance hardening:</strong> Further enhancements like fine-grained role-based access control (RBAC), audit logs, rate limiting enforcement, CAPTCHA for public forms, and compliance features (e.g., data retention policies) can be strengthened for enterprise use.</li>
+    <li><strong>Testing and quality assurance:</strong> Comprehensive automated test coverage (unit, integration, end-to-end) and CI/CD pipelines may be limited, affecting regression detection during rapid changes.</li>
+    <li><strong>User experience enhancements:</strong> Features such as multi-language support, accessibility (WCAG) refinements, offline/poor-network handling, and richer respondent experience can be improved.</li>
+  </ul>
+  <p><strong>Future scope:</strong></p>
+  <ul>
+    <li><strong>Advanced survey features:</strong> Add conditional logic, sections/pages, timed surveys, file-upload questions, and customizable themes/templates.</li>
+    <li><strong>Collaboration and sharing:</strong> Team-based survey authoring, role permissions (admin/creator/analyst/respondent), and shareable analytics dashboards.</li>
+    <li><strong>Enhanced analytics & AI insights:</strong> Sentiment analysis for text responses, trend detection, automated summary reports, and export to multiple formats (Excel, PPT).</li>
+    <li><strong>Integration and extensibility:</strong> Webhooks/APIs for third-party integrations (email, Slack, LMS/CRM), and scheduled survey distribution.</li>
+    <li><strong>Performance and reliability:</strong> Implement pagination, indexing strategies, caching (e.g., Redis), background workers/queues, and monitoring/log aggregation for production reliability.</li>
+    <li><strong>Mobile and omnichannel access:</strong> Develop a responsive PWA or dedicated mobile app and support QR-code-based survey distribution.</li>
+    <li><strong>Security & compliance:</strong> Strengthen RBAC, audit trails, encryption at rest/in transit policies, and privacy controls to meet organizational or regulatory requirements.</li>
+  </ul>
+
+  <div class="footer-note">Project: Jigyasa Online Survey Management System &nbsp;|&nbsp; Repository: Jigyasa_Online-survey-mangement</div>
+</body>
+</html>
